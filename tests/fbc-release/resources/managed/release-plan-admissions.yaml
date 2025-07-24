@@ -1,0 +1,177 @@
+
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlanAdmission
+metadata:
+  name: ${RELEASE_PLAN_ADMISSION_HAPPY_NAME}
+spec:
+  applications:
+    - ${APPLICATION_NAME}
+  data:
+    fbc:
+      fromIndex: "registry-proxy.engineering.redhat.com/rh-osbs/iib-preview-rhtap:{{ OCP_VERSION }}"
+      stagedIndex: false
+      targetIndex: "quay.io/redhat/redhat----preview-operator-index:{{ OCP_VERSION }}"
+      publishingCredentials: "fbc-preview-publishing-credentials"
+      requestTimeoutSeconds: 1500
+      buildTimeoutSeconds: 1500
+      hotfix: false
+      issueId: ""
+      preGA: false
+      productName: ""
+      productVersion: ""
+      allowedPackages:
+        - "example-operator"
+    pyxis:
+      server: stage
+      secret: pyxis-${COMPONENT_NAME}
+    sign:
+      configMapName: "hacbs-signing-pipeline-config-redhatbeta2"
+  origin: ${TENANT_NAMESPACE}
+  pipeline:
+    pipelineRef:
+      params:
+        - name: url
+          value: "${RELEASE_CATALOG_GIT_URL}"
+        - name: revision
+          value: "${RELEASE_CATALOG_GIT_REVISION}"
+        - name: pathInRepo
+          value: pipelines/managed/fbc-release/fbc-release.yaml
+      resolver: git
+    serviceAccountName: ${MANAGED_SA_NAME}
+    timeouts:
+      pipeline: 4h0m0s
+      tasks: 4h0m0s
+  policy: standard-${COMPONENT_NAME}
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlanAdmission
+metadata:
+  name: ${RELEASE_PLAN_ADMISSION_HOTFIX_NAME}
+spec:
+  applications:
+    - ${APPLICATION_NAME}
+  data:
+    fbc:
+      fromIndex: "registry-proxy.engineering.redhat.com/rh-osbs/iib-preview-rhtap:{{ OCP_VERSION }}"
+      stagedIndex: false
+      targetIndex: "quay.io/redhat/redhat----preview-operator-index:{{ OCP_VERSION }}"
+      publishingCredentials: "fbc-preview-publishing-credentials"
+      requestTimeoutSeconds: 1500
+      buildTimeoutSeconds: 1500
+      hotfix: true
+      issueId: "bz12345"
+      preGA: false
+      productName: ""
+      productVersion: ""
+      allowedPackages:
+        - "example-operator"
+    pyxis:
+      server: stage
+      secret: pyxis-${COMPONENT_NAME}
+    sign:
+      configMapName: "hacbs-signing-pipeline-config-redhatbeta2"
+  origin: ${TENANT_NAMESPACE}
+  pipeline:
+    pipelineRef:
+      params:
+        - name: url
+          value: "${RELEASE_CATALOG_GIT_URL}"
+        - name: revision
+          value: "${RELEASE_CATALOG_GIT_REVISION}"
+        - name: pathInRepo
+          value: pipelines/managed/fbc-release/fbc-release.yaml
+      resolver: git
+    serviceAccountName: ${MANAGED_SA_NAME}
+    timeouts:
+      pipeline: 4h0m0s
+      tasks: 4h0m0s
+  policy: standard-${COMPONENT_NAME}
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlanAdmission
+metadata:
+  name: ${RELEASE_PLAN_ADMISSION_PREGA_NAME}
+spec:
+  applications:
+    - ${APPLICATION_NAME}
+  data:
+    fbc:
+      fromIndex: "registry-proxy.engineering.redhat.com/rh-osbs/iib-preview-rhtap:{{ OCP_VERSION }}"
+      stagedIndex: false
+      targetIndex: "quay.io/redhat/redhat----preview-operator-index:{{ OCP_VERSION }}"
+      publishingCredentials: "fbc-preview-publishing-credentials"
+      requestTimeoutSeconds: 1500
+      buildTimeoutSeconds: 1500
+      hotfix: false
+      issueId: "bz12345"
+      preGA: true
+      productName: "preGA-product"
+      productVersion: "v2"
+      allowedPackages:
+        - "example-operator"
+    pyxis:
+      server: stage
+      secret: pyxis-${COMPONENT_NAME}
+    sign:
+      configMapName: "hacbs-signing-pipeline-config-redhatbeta2"
+  origin: ${TENANT_NAMESPACE}
+  pipeline:
+    pipelineRef:
+      params:
+        - name: url
+          value: "${RELEASE_CATALOG_GIT_URL}"
+        - name: revision
+          value: "${RELEASE_CATALOG_GIT_REVISION}"
+        - name: pathInRepo
+          value: pipelines/managed/fbc-release/fbc-release.yaml
+      resolver: git
+    serviceAccountName: ${MANAGED_SA_NAME}
+    timeouts:
+      pipeline: 4h0m0s
+      tasks: 4h0m0s
+  policy: standard-${COMPONENT_NAME}
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlanAdmission
+metadata:
+  name: ${RELEASE_PLAN_ADMISSION_STAGED_NAME}
+spec:
+  applications:
+    - ${APPLICATION_NAME}
+  data:
+    fbc:
+      fromIndex: "registry-proxy.engineering.redhat.com/rh-osbs/iib-preview-rhtap:{{ OCP_VERSION }}"
+      stagedIndex: true
+      targetIndex: ""
+      publishingCredentials: "fbc-preview-publishing-credentials"
+      requestTimeoutSeconds: 1500
+      buildTimeoutSeconds: 1500
+      hotfix: false
+      issueId: ""
+      preGA: false
+      productName: ""
+      productVersion: ""
+      allowedPackages:
+        - "example-operator"
+    pyxis:
+      server: stage
+      secret: pyxis-${COMPONENT_NAME}
+    sign:
+      configMapName: "hacbs-signing-pipeline-config-redhatbeta2"
+  origin: ${TENANT_NAMESPACE}
+  pipeline:
+    pipelineRef:
+      params:
+        - name: url
+          value: "${RELEASE_CATALOG_GIT_URL}"
+        - name: revision
+          value: "${RELEASE_CATALOG_GIT_REVISION}"
+        - name: pathInRepo
+          value: pipelines/managed/fbc-release/fbc-release.yaml
+      resolver: git
+    serviceAccountName: ${MANAGED_SA_NAME}
+    timeouts:
+      pipeline: 4h0m0s
+      tasks: 4h0m0s
+  policy: standard-${COMPONENT_NAME}

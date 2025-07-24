@@ -1,0 +1,49 @@
+
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlan
+metadata:
+  labels:
+    release.appstudio.openshift.io/auto-release: "${RELEASE_PLAN_HAPPY_AUTO_RELEASE}"
+    release.appstudio.openshift.io/standing-attribution: 'true'
+    release.appstudio.openshift.io/releasePlanAdmission: "${RELEASE_PLAN_ADMISSION_HAPPY_NAME}"
+  name: ${RELEASE_PLAN_HAPPY_NAME}
+spec:
+  application: ${APPLICATION_NAME}
+  target: ${MANAGED_NAMESPACE}
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlan
+metadata:
+  labels:
+    release.appstudio.openshift.io/auto-release: "${RELEASE_PLAN_HOTFIX_AUTO_RELEASE}"
+    release.appstudio.openshift.io/standing-attribution: 'true'
+    release.appstudio.openshift.io/releasePlanAdmission: "${RELEASE_PLAN_ADMISSION_HOTFIX_NAME}"
+  name: ${RELEASE_PLAN_HOTFIX_NAME}
+spec:
+  application: ${APPLICATION_NAME}
+  target: ${MANAGED_NAMESPACE}
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlan
+metadata:
+  labels:
+    release.appstudio.openshift.io/auto-release: "${RELEASE_PLAN_PREGA_AUTO_RELEASE}"
+    release.appstudio.openshift.io/standing-attribution: 'true'
+    release.appstudio.openshift.io/releasePlanAdmission: "${RELEASE_PLAN_ADMISSION_PREGA_NAME}"
+  name: ${RELEASE_PLAN_PREGA_NAME}
+spec:
+  application: ${APPLICATION_NAME}
+  target: ${MANAGED_NAMESPACE}
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlan
+metadata:
+  labels:
+    release.appstudio.openshift.io/auto-release: "${RELEASE_PLAN_STAGED_AUTO_RELEASE}"
+    release.appstudio.openshift.io/standing-attribution: 'true'
+    release.appstudio.openshift.io/releasePlanAdmission: "${RELEASE_PLAN_ADMISSION_STAGED_NAME}"
+  name: ${RELEASE_PLAN_STAGED_NAME}
+spec:
+  application: ${APPLICATION_NAME}
+  target: ${MANAGED_NAMESPACE}

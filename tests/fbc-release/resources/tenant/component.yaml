@@ -1,0 +1,20 @@
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    git-provider: github
+    build.appstudio.openshift.io/request: configure-pac
+    image.redhat.com/generate: '{"visibility": "public"}'
+    build.appstudio.openshift.io/pipeline: '{"name": "fbc-builder", "bundle": "latest"}'
+  name: ${COMPONENT_NAME}
+spec:
+  application: ${APPLICATION_NAME}
+  componentName: ${COMPONENT_NAME}
+  secret: pipelines-as-code-secret-${COMPONENT_NAME}
+  source:
+    git:
+      dockerfileUrl: catalog.Dockerfile
+      revision: ${COMPONENT_BRANCH}
+      context: "4.13"
+      url: "${COMPONENT_GIT_URL}"
